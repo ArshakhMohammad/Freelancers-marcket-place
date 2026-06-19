@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Login</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#544ef3,#000000);
+        }
+
+        .login-container{
+            width:400px;
+            padding:40px;
+            border-radius:15px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+            background: transparent;
+            color: aliceblue;
+        }
+
+        .login-container h2{
+            text-align:center;
+            margin-bottom:30px;
+            color:#ffffff;
+        }
+
+        .input-group{
+            margin-bottom:20px;
+        }
+
+        .input-group label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+            color:#ffffff;
+        }
+
+        .input-group input{
+            width:100%;
+            padding:14px;
+            border:1px solid #d1d5db;
+            border-radius:8px;
+            outline:none;
+            transition:0.3s;
+        }
+
+        .input-group input:focus{
+            border-color:#2563eb;
+            box-shadow:0 0 5px rgba(37,99,235,0.3);
+            
+        }
+
+        .login-btn{
+            width:100%;
+            padding:14px;
+            border:none;
+            background:#2563eb;
+            color:white;
+            font-size:16px;
+            border-radius:8px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .login-btn:hover{
+            background:#1d4ed8;
+        }
+
+        .register-text{
+            text-align:center;
+            margin-top:20px;
+            color:#6b7280;
+        }
+
+        .register-text a{
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+        .message{
+            background:#fee2e2;
+            color:#b91c1c;
+            padding:10px;
+            border-radius:8px;
+            margin-bottom:15px;
+            text-align:center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="login-container">
+
+        <h2>Freelancer Login</h2>
+
+        <!-- Django Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+            <div class="register-text">
+                Don't have an account?
+                <a href="{% url 'freelancer_reg' %}">
+                    Register
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

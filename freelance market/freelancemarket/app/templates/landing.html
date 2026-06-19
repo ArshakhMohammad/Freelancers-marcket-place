@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillLink - Local Freelancer Marketplace</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #492b04;
+            color: #F8FAFC;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: #5c4f02;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f6993b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #CBD5E1;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #492b04;
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .login-btn {
+            padding: 10px 22px;
+            border: 2px solid #492b04;
+            border-radius: 8px;
+            color: #492b04;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #292003;
+            color: white;
+        }
+
+        .signup-btn {
+            padding: 10px 22px;
+            background: #b66b0a;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .signup-btn:hover {
+            background: #291c03;
+        }
+
+        /* HERO SECTION */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 140px 8% 80px;
+            gap: 50px;
+            background: linear-gradient(135deg,
+                    #8e6929 0%,
+                    #50371f 50%,
+                    #3b311e 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 60px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: #F8FAFC;
+        }
+
+        .hero-text h1 span {
+            color: #492b04;
+
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #CBD5E1;
+
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-buttons a {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .start-btn {
+            background: #c68126;
+            color: white;
+        }
+
+        .start-btn:hover {
+            background: #c47a19;
+        }
+
+        .learn-btn {
+            border: 2px solid #cf821d;
+            color: #ffffff;
+        }
+
+        .learn-btn:hover {
+            background: #ae670a;
+            color: white;
+        }
+
+        /* HERO IMAGE */
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-card {
+            width: 420px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .job {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #f9fafb;
+        }
+
+        .job h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .job p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .price {
+            color: #945d16;
+            font-weight: 700;
+        }
+
+        /* FEATURES */
+
+        .features {
+            padding: 90px 8%;
+            background: #966e39;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #F8FAFC;
+            font-size: 17px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #7d4d0f;
+            border: 1px solid #774505;
+            color: #F8FAFC;
+            padding: 35px;
+            border-radius: 18px;
+            transition: 0.3s;
+            text-box-edge: 2px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .feature-card:hover {
+
+            background: #cb912b;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .feature-card i {
+            font-size: 40px;
+            color: #CBD5E1;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .feature-card p {
+            color: #CBD5E1;
+            line-height: 1.7;
+        }
+
+        /* CTA */
+
+        .cta {
+            margin: 80px 8%;
+            background: linear-gradient(135deg,
+                    #c68126,
+                    #c47a19);
+            border-radius: 24px;
+            padding: 70px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 35px;
+            opacity: 0.9;
+        }
+
+        .cta a {
+            background: white;
+            color: #492b04;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #623b07;
+            border-top: 1px solid #334155;
+            padding: 30px 8%;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: #d1d5db;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:992px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-text h1 {
+                font-size: 45px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media(max-width:600px) {
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-card {
+                width: 100%;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+        }
+
+        .admin-btn {
+            padding: 10px 22px;
+            border: 2px solid #dc2626;
+            border-radius: 8px;
+            color: #dc2626;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .admin-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">SkillLink</div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#findjobs">Find Jobs</a>
+            <a href="#freelancers">Freelancers</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="nav-btns">
+
+            <a href="{% url 'admin_login' %}" class="admin-btn">
+                <i class="fa-solid fa-user-shield"></i>
+                Admin
+            </a>
+
+            <a href="{% url 'freelancer_login' %}" class="login-btn">
+                Login
+            </a>
+
+            <a href="{% url 'freelancer_reg' %}" class="signup-btn">
+                Get Started
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- HERO -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-text">
+
+            <h1>
+                Connect Local Skills
+                <br>
+                With <span>Real Opportunities</span>
+            </h1>
+
+            <p>
+                A modern freelancer marketplace helping students,
+                local workers, and small businesses connect easily.
+                Find nearby jobs, hire trusted talent, and grow your career.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="{% url 'client_login' %}" class="start-btn">
+                    Start Hiring
+                </a>
+
+                <a href="{% url 'client_reg' %}" class="learn-btn">
+                    New here!!!
+                </a>
+            </div>
+
+        </div>
+
+        <section class="features" id="findjobs">
+
+            <div class="section-title">
+                <h2>Find Jobs Near You</h2>
+
+                <p>
+                    Browse local freelance jobs and opportunities.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    <h3>Website Development</h3>
+                    <p>
+                        Build responsive websites for local businesses and startups.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <h3>Content Writing</h3>
+                    <p>
+                        Work with clients needing blogs, ads, and social media content.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <i class="fa-solid fa-camera"></i>
+                    <h3>Photography</h3>
+                    <p>
+                        Get photography gigs for events and businesses nearby.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+    <section class="features" id="freelancers">
+
+        <div class="section-title">
+            <h2>Top Freelancers</h2>
+
+            <p>
+                Meet talented freelancers from your local area.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+            {% for freelancer in freelancers %}
+            <div class="feature-card">
+                <i class="fa-solid fa-user"></i>
+                <h3>{{ freelancer.full_name }} - {{ freelancer.title }}</h3>
+                <p>
+                    {{ freelancer.bio }}
+                </p>
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="section-title">
+            <h2>Why Choose SkillLink?</h2>
+
+            <p>
+                Built for local freelancers and businesses with modern technology.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h3>Nearby Jobs</h3>
+
+                <p>
+                    Discover opportunities around your location and connect with local clients faster.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <h3>Trusted Platform</h3>
+
+                <p>
+                    Verified users, ratings, and reporting systems ensure a safe experience.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-robot"></i>
+
+                <h3>AI Assistance</h3>
+
+                <p>
+                    Generate job descriptions, pricing suggestions, and multilingual support.<br>
+                    (Coming soon!!!!!!)
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-wallet"></i>
+
+                <h3>Easy Payments</h3>
+
+                <p>
+                    Support for UPI payments and cash-after-work for flexible transactions.<br>
+                    (Coming soon!!!!!!)
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CTA -->
+
+    <section class="cta">
+
+        <h2>Start Your Freelance Journey Today</h2>
+
+        <p>
+            Join thousands of freelancers and businesses building opportunities together.
+        </p>
+
+        <a href="{% url 'freelancer_reg' %}">Create Free Account</a>
+
+    </section>
+
+    <section class="features" id="about">
+
+        <div class="section-title">
+            <h2>About SkillLink</h2>
+
+            <p>
+                SkillLink is a local freelancer marketplace designed to connect
+                skilled workers, students, and businesses in one platform.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Our Mission</h3>
+                <p>
+                    Empower local talent with real earning opportunities.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-users"></i>
+                <h3>Community Driven</h3>
+                <p>
+                    Built for students, freelancers, and small businesses.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fa-solid fa-globe"></i>
+                <h3>Future Vision</h3>
+                <p>
+                    Expand digital opportunities across local communities.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer id="contact">
+
+        <h2 style="margin-bottom:20px;">Contact Admin</h2>
+
+        <p>Email: admin@skilllink.com</p>
+        <p>Phone: +91 9876543210</p>
+        <p>Location: Kollam, Kerala</p>
+
+        <br>
+
+        <p>
+            © 2026 SkillLink. All Rights Reserved.
+        </p>
+
+    </footer>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 SkillLink. All Rights Reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

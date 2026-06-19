@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Freelancer Profile</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f3f4f6;
+            padding:40px;
+        }
+
+        .profile-container{
+            max-width:1100px;
+            margin:auto;
+        }
+
+        .profile-card{
+            background:white;
+            border-radius:15px;
+            overflow:hidden;
+            box-shadow:0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .profile-header{
+            background:linear-gradient(135deg,#2563eb,#7c3aed);
+            height:180px;
+            position:relative;
+        }
+
+        .profile-image{
+            position:absolute;
+            bottom:-60px;
+            left:40px;
+        }
+
+        .profile-image img{
+            width:130px;
+            height:130px;
+            border-radius:50%;
+            border:5px solid white;
+            object-fit:cover;
+            background:white;
+        }
+
+        .profile-body{
+            padding:90px 40px 40px;
+        }
+
+        .top-section{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .freelancer-info h1{
+            font-size:32px;
+            color:#111827;
+            margin-bottom:10px;
+        }
+
+        .freelancer-info h3{
+            color:#2563eb;
+            margin-bottom:10px;
+            font-weight:500;
+        }
+
+        .freelancer-info p{
+            color:#6b7280;
+            line-height:1.7;
+            max-width:700px;
+        }
+
+        .rate-box{
+            background:#eff6ff;
+            padding:20px 30px;
+            border-radius:12px;
+            text-align:center;
+        }
+
+        .rate-box h2{
+            color:#2563eb;
+            font-size:30px;
+        }
+
+        .rate-box span{
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        .details-section{
+            margin-top:40px;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:20px;
+        }
+
+        .detail-card{
+            background:#f9fafb;
+            padding:25px;
+            border-radius:12px;
+        }
+
+        .detail-card h3{
+            margin-bottom:20px;
+            color:#111827;
+            border-bottom:2px solid #2563eb;
+            padding-bottom:10px;
+        }
+
+        .detail-item{
+            margin-bottom:15px;
+        }
+
+        .detail-item strong{
+            display:block;
+            margin-bottom:5px;
+            color:#374151;
+        }
+
+        .detail-item span{
+            color:#6b7280;
+        }
+
+        .skills{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+        }
+
+        .skill{
+            background:#2563eb;
+            color:white;
+            padding:8px 15px;
+            border-radius:20px;
+            font-size:14px;
+        }
+
+        .portfolio-section{
+            margin-top:40px;
+        }
+
+        .portfolio-section h2{
+            margin-bottom:20px;
+            color:#111827;
+        }
+
+        .portfolio-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:20px;
+        }
+
+        .portfolio-card{
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            transition:0.3s;
+        }
+
+        .portfolio-card:hover{
+            transform:translateY(-5px);
+        }
+
+        .portfolio-card img{
+            width:100%;
+            height:180px;
+            object-fit:cover;
+        }
+
+        .portfolio-content{
+            padding:20px;
+        }
+
+        .portfolio-content h3{
+            margin-bottom:10px;
+            color:#111827;
+        }
+
+        .portfolio-content p{
+            color:#6b7280;
+            line-height:1.6;
+            font-size:14px;
+        }
+
+        .buttons{
+            margin-top:30px;
+            display:flex;
+            gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .btn{
+            padding:14px 25px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:15px;
+            transition:0.3s;
+            text-decoration:none;
+        }
+
+        .primary-btn{
+            background:#2563eb;
+            color:white;
+        }
+
+        .primary-btn:hover{
+            background:#1d4ed8;
+        }
+
+        .secondary-btn{
+            background:#e5e7eb;
+            color:#111827;
+        }
+
+        .secondary-btn:hover{
+            background:#d1d5db;
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:20px;
+            }
+
+            .profile-image{
+                left:50%;
+                transform:translateX(-50%);
+            }
+
+            .profile-body{
+                padding-top:100px;
+                text-align:center;
+            }
+
+            .top-section{
+                justify-content:center;
+            }
+
+            .skills{
+                justify-content:center;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="profile-container">
+
+        <div class="profile-card">
+
+            <!-- Header -->
+
+            <div class="profile-header">
+
+                <div class="profile-image">
+
+                    {% if freelancer.profile_image %}
+                        <img src="{{ freelancer.profile_image.url }}" alt="">
+                    {% else %}
+                        <img src="https://via.placeholder.com/130" alt="">
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- Body -->
+
+            <div class="profile-body">
+
+                <div class="top-section">
+
+                    <div class="freelancer-info">
+
+                        <h1>{{ freelancer.full_name }}</h1>
+
+                        <h3>{{ freelancer.title }}</h3>
+
+                        <p>
+                            {{ freelancer.bio }}
+                        </p>
+
+                    </div>
+
+                    <div class="rate-box">
+
+                        <h2>${{ freelancer.rate }}</h2>
+
+                        <span>Per Hour</span>
+
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="buttons">
+
+                    <a href="#" class="btn primary-btn">
+                        Hire Me
+                    </a>
+
+                    <a href="#" class="btn secondary-btn">
+                        Send Message
+                    </a>
+
+                </div>
+
+                <!-- Details -->
+
+                <div class="details-section">
+
+                    <div class="detail-card">
+
+                        <h3>Personal Details</h3>
+
+                        <div class="detail-item">
+                            <strong>Email</strong>
+                            <span>{{ freelancer.email }}</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <strong>Phone</strong>
+                            <span>{{ freelancer.phone }}</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <strong>Joined</strong>
+                            <span>{{ freelancer.created_at }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="detail-card">
+
+                        <h3>Skills</h3>
+
+                        <div class="skills">
+
+                            <span class="skill">
+                                {{ freelancer.skills }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Portfolio -->
+
+                <div class="portfolio-section">
+
+                    <h2>Portfolio</h2>
+
+                    <div class="portfolio-grid">
+
+                        <div class="portfolio-card">
+
+                            <img src="https://via.placeholder.com/400x250" alt="">
+
+                            <div class="portfolio-content">
+
+                                <h3>E-commerce Website</h3>
+
+                                <p>
+                                    Modern ecommerce website developed using
+                                    Django and React.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="portfolio-card">
+
+                            <img src="https://via.placeholder.com/400x250" alt="">
+
+                            <div class="portfolio-content">
+
+                                <h3>Portfolio Website</h3>
+
+                                <p>
+                                    Responsive personal portfolio website with
+                                    modern UI design.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | SkillLink</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+        }
+
+        .card h3 {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 30px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .notice {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .accepted {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 5px solid #16a34a;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 5px solid #dc2626;
+        }
+
+        .application-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+        }
+
+        .application-card h2 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin: 8px 0;
+            color: #374151;
+        }
+
+        .proposal {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .cancel-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .cancel-btn:hover {
+            background: #b91c1c;
+        }
+
+        .empty {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>
+            <i class="fa-solid fa-file-circle-check"></i>
+            My Applications
+        </h1>
+    </div>
+
+    <div class="container">
+
+        <div class="stats">
+
+            <div class="card">
+                <h3>Total Applications</h3>
+                <p>{{ applications.count }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Pending</h3>
+                <p>{{ pending_count }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Accepted</h3>
+                <p>{{ accepted_count }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Rejected</h3>
+                <p>{{ rejected_count }}</p>
+            </div>
+
+        </div>
+
+        {% for app in applications %}
+
+        <div class="application-card">
+
+            <h2>{{ app.job.title }}</h2>
+
+            <div class="info">
+                <strong>Client:</strong>
+                {{ app.job.client.full_name }}
+            </div>
+
+            <div class="info">
+                <strong>Budget:</strong>
+                ₹{{ app.job.budget }}
+            </div>
+
+            <div class="info">
+                <strong>Applied On:</strong>
+                {{ app.created_at|date:"d M Y" }}
+            </div>
+
+            <div class="proposal">
+                <strong>Your Proposal:</strong>
+                <br><br>
+                {{ app.cover_letter }}
+            </div>
+
+            {% if app.job.completed %}
+
+            <div class="notice accepted">
+                ✅ Project Completed Successfully
+                <br><br>
+                Client approved completion of
+                <strong>{{ app.job.title }}</strong>
+            </div>
+
+            <span class="status success">
+                Completed ✅
+            </span>
+
+            {% elif app.job.completion_requested %}
+
+            <div class="notice pending">
+                ⏳ Completion request submitted.
+                <br><br>
+                Waiting for client approval.
+            </div>
+
+            <span class="status pending">
+                Awaiting Approval
+            </span>
+
+            {% elif app.status == "accepted" %}
+
+            <div class="notice accepted">
+                🎉 Your application for
+                <strong>{{ app.job.title }}</strong>
+                has been accepted.
+            </div>
+
+            <span class="status success">
+                Accepted 🎉
+            </span>
+
+            <br><br>
+
+            <a href="{% url 'mark_completed' app.job.id %}" class="cancel-btn" style="background:green;">
+                Mark Project Completed
+            </a>
+
+            {% elif app.status == "rejected" %}
+
+            <div class="notice rejected">
+                ❌ Your application for
+                <strong>{{ app.job.title }}</strong>
+                has been rejected.
+            </div>
+
+            <span class="status danger">
+                Rejected ❌
+            </span>
+
+            {% else %}
+
+            <span class="status pending">
+                Pending Review ⏳
+            </span>
+
+            <br><br>
+
+            <a href="{% url 'cancel_application' app.job.id %}" class="cancel-btn">
+                Withdraw Application
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+        {% empty %}
+
+        <div class="empty">
+            <h2>No Applications Yet</h2>
+            <p>Start applying for jobs to see them here.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>
+```

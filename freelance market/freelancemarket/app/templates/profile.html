@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eef2ff;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            padding: 50px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .header img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .detail-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            transition: 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-card h3 {
+            color: #2563eb;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .detail-card p {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill {
+            background: #2563eb;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .update-form {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 20px;
+            animation: fade 0.4s ease;
+        }
+
+        @keyframes fade {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .update-form h2 {
+            margin-bottom: 25px;
+            color: #1e293b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        @media(max-width:768px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            {% if freelancer.profile_image %}
+            <img src="{{ freelancer.profile_image.url }}" alt="">
+            {% else %}
+            <img src="https://i.pravatar.cc/300" alt="">
+            {% endif %}
+
+            <h1>{{ freelancer.full_name }}</h1>
+
+            <p>{{ freelancer.title }}</p>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="content">
+
+            <div class="profile-grid">
+
+                <div class="detail-card">
+                    <h3>Email</h3>
+                    <p>{{ freelancer.email }}</p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Phone</h3>
+                    <p>{{ freelancer.phone }}</p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Location</h3>
+                    <p>{{ freelancer.location }}</p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>About</h3>
+                    <p>{{ freelancer.bio }}</p>
+                </div>
+
+                <div class="detail-card" style="grid-column:1/-1;">
+                    <h3>Skills</h3>
+
+                    <div class="skills">
+
+                        <div class="skill">
+                            {{ freelancer.skills }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- UPDATE BUTTON -->
+
+            <div class="btn-container">
+
+                <button class="btn" onclick="showUpdateForm()">
+                    Update Profile
+                </button>
+
+            </div>
+
+            <!-- UPDATE FORM -->
+
+            <div class="update-form" id="updateForm">
+
+                <h2>Edit Your Profile</h2>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+
+                        <input type="text" name="full_name" value="{{ freelancer.full_name }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Profession</label>
+
+                        <input type="text" name="profession" value="{{ freelancer.title }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+
+                        <input type="email" name="email" value="{{ freelancer.email }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+
+                        <input type="text" name="phone" value="{{ freelancer.phone }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+
+                        <input type="text" name="location" value="{{ freelancer.location }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>About</label>
+
+                        <textarea name="about">{{ freelancer.bio }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skills</label>
+
+                        <input type="text" name="skills" value="{{ freelancer.skills }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Profile Image</label>
+
+                        <input type="file" name="profile_image">
+                    </div>
+
+                    <button type="submit" class="btn">
+                        Save Changes
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function showUpdateForm() {
+
+            let form = document.getElementById("updateForm");
+
+            if (form.style.display === "block") {
+
+                form.style.display = "none";
+
+            }
+            else {
+
+                form.style.display = "block";
+
+                form.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

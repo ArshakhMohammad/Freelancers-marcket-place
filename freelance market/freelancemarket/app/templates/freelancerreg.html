@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freelancer Registration</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .left {
+            width: 40%;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left h1 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .left p {
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .right {
+            width: 60%;
+            padding: 40px;
+        }
+
+        .right h2 {
+            margin-bottom: 25px;
+            color: #111827;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width {
+            grid-column: 1/3;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #374151;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .btn {
+            grid-column: 1/3;
+            padding: 15px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .login-text {
+            grid-column: 1/3;
+            text-align: center;
+            margin-top: 10px;
+            color: #6b7280;
+        }
+
+        .login-text a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media(max-width:768px) {
+
+            .container {
+                flex-direction: column;
+            }
+
+            .left,
+            .right {
+                width: 100%;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width,
+            .btn,
+            .login-text {
+                grid-column: 1/2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="left">
+            <h1>Join As Freelancer</h1>
+            <p>
+                Create your freelancer profile and start getting projects from clients around the world.
+                Showcase your skills, portfolio, and grow your career.
+            </p>
+        </div>
+
+        <div class="right">
+
+            <h2>Freelancer Registration</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <!-- Django CSRF -->
+                {% csrf_token %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="message">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" placeholder="Enter full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" placeholder="Enter phone number">
+                </div>
+
+                <div class="input-group">
+                    <label>Skills</label>
+                    <input type="text" name="skills" placeholder="Python, Django, React">
+                </div>
+
+                <div class="input-group full-width">
+                    <label>Professional Title</label>
+                    <input type="text" name="title" placeholder="Full Stack Developer">
+                </div>
+
+                <div class="input-group full-width">
+                    <label>Bio</label>
+                    <textarea name="bio" placeholder="Tell clients about yourself"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Hourly Rate ($)</label>
+                    <input type="number" name="rate" placeholder="20">
+                </div>
+
+                <div class="input-group">
+                    <label>Profile Image</label>
+                    <input type="file" name="profile_image">
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Confirm password" required>
+                </div>
+
+                <button type="submit" class="btn">
+                    Create Account
+                </button>
+
+                <div class="login-text">
+                    Already have an account?
+                    <a href="{% url 'freelancer_login' %}">Login</a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

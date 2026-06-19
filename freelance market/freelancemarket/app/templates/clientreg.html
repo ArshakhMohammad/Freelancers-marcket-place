@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Registration</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,
+                    #4d320f,
+                    #6c4819,
+                    #7d4d0f,
+                    #492b04,
+                    #3b311e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            color: #eb7125;
+            font-size: 30px;
+        }
+
+        .logo p {
+            color: rgb(169, 122, 21);
+            margin-top: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #40403f;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #eb7125;
+        }
+
+        textarea {
+            resize: none;
+            height: 90px;
+        }
+
+        .location-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .location-box input {
+            flex: 1;
+        }
+
+        .verify-btn {
+            background: #eb7125;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .verify-btn:hover {
+            background: #824e0a;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        .register-btn {
+            width: 100%;
+            background: #a37216;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .register-btn:hover {
+            background: #d58e2b;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 18px;
+            color: #574c4c;
+        }
+
+        .bottom-text a {
+            color: #eb9525;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 45px;
+        }
+
+        .password-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <div class="container">
+
+        <div class="logo">
+            <h1>Local Skill Marketplace</h1>
+            <p>Client Registration</p>
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+        <div style="
+            padding:10px;
+            margin-bottom:15px;
+            border-radius:8px;
+            background:#fee2e2;
+            color:#b91c1c;
+        ">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <form action="{% url 'client_reg' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Enter your full name" name="full_name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Phone Number</label>
+
+                <div class="location-box">
+                    <input type="tel" placeholder="Enter phone number" name="phone" required>
+                    <button type="button" class="verify-btn">
+                        Verify OTP
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter your email" name="email" required>
+            </div>
+            <label>Location</label>
+            <input type="text" name="location" placeholder="Enter your location">
+            <label>Client Type</label>
+            <select name="client_type">
+                <option>Select Client Type</option>
+                <option>Individual</option>
+                <option>Small Business</option>
+                <option>Startup</option>
+                <option>Company</option>
+            </select>
+            <label>Services Needed</label>
+            <textarea name="services" placeholder="Example: Electrician, Graphic Designer, Tutor..."></textarea>
+            <label>Preferred Contact Method</label>
+            <select name="contact_method">
+                <option>Select Contact Method</option>
+                <option>Phone Call</option>
+                <option>WhatsApp</option>
+                <option>Email</option>
+            </select>
+
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="password-box">
+                    <input type="password" id="password" name="password" placeholder=" Strong Password">
+                    <i class="fa-solid fa-eye" onclick="togglePassword()"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <div class="password-box">
+                    <input type="password" id="confirm_password" name="confirm_password"
+                        placeholder="Again enter the Password to confirm">
+                    <i class="fa-solid fa-eye" onclick="toggleConfirmPassword()"></i>
+                </div>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox">
+                <p>I agree to the Terms & Conditions</p>
+            </div>
+
+            <button class="register-btn">
+                Create Client Account
+            </button>
+
+        </form>
+
+        <div class="bottom-text">
+            Already have an account?
+            <a href="{% url 'client_login' %}">Login</a>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    function togglePassword() {
+        let p = document.getElementById("password");
+        p.type = p.type === "password" ? "text" : "password";
+    }
+
+    function toggleConfirmPassword() {
+        let p = document.getElementById("confirm_password");
+        p.type = p.type === "password" ? "text" : "password";
+    }
+</script>
+
+</html>

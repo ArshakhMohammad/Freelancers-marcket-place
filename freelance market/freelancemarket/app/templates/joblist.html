@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Jobs | SkillLink</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+            border-top: 5px solid #2563eb;
+        }
+
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-title {
+            font-size: 24px;
+            color: #111827;
+            margin-bottom: 15px;
+        }
+
+        .job-desc {
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .job-details {
+            margin-bottom: 20px;
+        }
+
+        .detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .detail i {
+            color: #2563eb;
+        }
+
+        .apply-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .apply-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .cancel-btn {
+            background: #dc2626;
+        }
+
+        .status-box {
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .committed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .applied {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .empty {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty i {
+            font-size: 60px;
+            color: #9ca3af;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #374151;
+        }
+
+        @media(max-width:768px) {
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>
+            <i class="fa-solid fa-briefcase"></i>
+            Available Jobs
+        </h1>
+        <p>Discover opportunities and apply to projects that match your skills.</p>
+    </div>
+
+    <div class="container">
+
+        <div class="search-box">
+            <input type="text" placeholder="Search jobs, skills, location...">
+        </div>
+
+        {% if jobs %}
+
+        <div class="jobs-grid">
+
+            {% for job in jobs %}
+
+            <div class="job-card">
+
+                <h2 class="job-title">{{ job.title }}</h2>
+
+                <p class="job-desc">{{ job.description }}</p>
+
+                <div class="job-details">
+
+                    <div class="detail">
+                        <i class="fa-solid fa-wallet"></i>
+                        <strong>Budget:</strong>
+                        ₹{{ job.budget }}
+                    </div>
+
+                    <div class="detail">
+                        <i class="fa-solid fa-location-dot"></i>
+                        {{ job.location }}
+                    </div>
+
+                    <div class="detail">
+                        <i class="fa-solid fa-layer-group"></i>
+                        {{ job.category }}
+                    </div>
+
+                </div>
+
+                {% if job.taken_by_me %}
+
+                <div class="status-box committed">
+                    ✅ Accepted / Project Committed
+                </div>
+
+                {% elif job.application_status == "pending" %}
+
+                <div class="status-box applied">
+                    ✓ Applied
+                </div>
+
+                <a href="{% url 'cancel_application' job.id %}" class="apply-btn cancel-btn">
+                    Cancel Application
+                </a>
+
+                {% elif job.application_status == "rejected" %}
+
+                <div class="status-box rejected">
+                    ❌ Application Rejected
+                </div>
+
+                {% elif job.is_taken %}
+
+                <div class="status-box rejected">
+                    🔒 This Job Has Been Taken
+                </div>
+
+                {% else %}
+
+                <a href="{% url 'apply_job' job.id %}" class="apply-btn">
+                    Apply Now
+                </a>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            <i class="fa-solid fa-folder-open"></i>
+            <h2>No Jobs Available Yet</h2>
+            <p>New opportunities will appear here once clients post jobs.</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
